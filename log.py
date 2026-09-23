@@ -62,7 +62,7 @@ with open ("logs.txt","r") as file:
             Sold_products[product]+=int(i["details"]["COUNT"])
             if product not in Total_revenue_product:
                 Total_revenue_product[product]=0
-            Total_revenue_product[product]+=int(i["details"]["PRICE"])
+            Total_revenue_product[product]+=(int(i["details"]["COUNT"])*int(i["details"]["PRICE"]))
         if i["event"]=="ERROR":
             error=i["details"]["ERROR_CODE"]
             if error not in error_count:
@@ -83,34 +83,38 @@ with open ("logs.txt","r") as file:
         if Sold_products[j]<Lowest_selling_product:
             Lowest_selling_product=Sold_products[j]
             name_Lowest_selling_product=j
+
+    user_reports = [
+    ("login count:", login),
+    ("logout count:", logout),
+    ("buy count:", buy),
+    ("Number of products purchased:", buy_count),
+    ("total price:", buy_price),
+    ("first login date:", first_login_date),
+    ("first login time:", first_login_time),
+    ("last login date:", last_login_date),
+    ("last login time:", last_login_time)
+]
+
+print("_________User Reports__________")
+
+for name, value in user_reports:
+    print(name, value)
+    print()
+
+product_reports = [
+    ("Best selling product:", name_Best_selling_product),
+    ("Lowest selling product:", name_Lowest_selling_product),
+    ("Sold products:", Sold_products),
+    ("Total revenue product:", Total_revenue_product)
+]
+
+print("_________Product Analysis__________")
+
+for name, value in product_reports:
+    print(name, value)
     
-    print("_________User Reports__________")        
-    print("login count:",login)
-    print("\n")
-    print("logout count:",logout)
-    print("\n")
-    print("buy count:",buy)
-    print("\n")
-    print("Number of products purchased:",buy_count)
-    print("\n")
-    print("total price:", buy_price)
-    print("\n")
-    print("first login date",first_login_date)
-    print("\n")
-    print("first login time:",first_login_time)
-    print("\n")
-    print("last login date:",last_login_date)
-    print("\n")
-    print("last login time:",last_login_time)
-    print("_________Product Analysis__________") 
-    print("Best selling product:",name_Best_selling_product)
-    print("Lowest_selling_product:",name_Lowest_selling_product)
-    print("Sold products:",Sold_products)
-    print("Total revenue product:",Total_revenue_product)
-    print("_________Error Analysis__________") 
-    for i in error_count:
-        print("ERROR",i)
-        print(error_count[i],"Times")
-        print("____________")
-   
-   
+for i in error_count:
+    print("ERROR", i)
+    print(error_count[i], "Times")
+    print("____________") 
